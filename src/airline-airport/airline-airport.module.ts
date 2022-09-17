@@ -5,6 +5,7 @@ import { AirportModule } from '../airport/airport.module';
 import { AirlineEntity } from '../airline/airline.entity';
 import { AirportEntity } from '../airport/airport.entity';
 import { AirlineAirportService } from './airline-airport.service';
+import { AirlineAirportController } from './airline-airport.controller';
 
 @Module({
   imports: [
@@ -13,5 +14,6 @@ import { AirlineAirportService } from './airline-airport.service';
     AirportModule,
   ],
   providers: [AirlineAirportService],
+  controllers: [AirlineAirportController],
 })
 export class AirlineAirportModule {}
