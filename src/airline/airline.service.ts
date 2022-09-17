@@ -26,13 +26,13 @@ export class AirlineService {
   }
 
   async create(airline: AirlineEntity): Promise<AirlineEntity> {
-    this.#isInThePast(new Date(airline.establishmentDate));
+    await this.#isInThePast(new Date(airline.establishmentDate));
     return await this.airlineRepository.save(airline);
   }
 
   async update(id: string, airline: AirlineEntity): Promise<AirlineEntity> {
     const persistedAirline = await this.findOneBy(id);
-    this.#isInThePast(new Date(airline.establishmentDate));
+    await this.#isInThePast(new Date(airline.establishmentDate));
     return await this.airlineRepository.save({
       ...persistedAirline,
       ...airline,
@@ -52,7 +52,7 @@ export class AirlineService {
       where: { id: id },
       relations: relations,
     });
-    if (!airline) this.#handleNotFoundAirline();
+    if (!airline) await this.#handleNotFoundAirline();
     return airline;
   }
 

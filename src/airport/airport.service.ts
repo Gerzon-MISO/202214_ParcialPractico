@@ -26,13 +26,13 @@ export class AirportService {
   }
 
   async create(airport: AirportEntity): Promise<AirportEntity> {
-    this.#codeIsValid(airport.code);
+    await this.#codeIsValid(airport.code);
     return await this.airportRepository.save(airport);
   }
 
   async update(id: string, airport: AirportEntity): Promise<AirportEntity> {
     const persistedAirport = await this.findOneBy(id);
-    this.#codeIsValid(airport.code);
+    await this.#codeIsValid(airport.code);
     return await this.airportRepository.save({
       ...persistedAirport,
       ...airport,
@@ -52,7 +52,7 @@ export class AirportService {
       where: { id: id },
       relations: relations,
     });
-    if (!airport) this.#handleNotFoundAirport();
+    if (!airport) await this.#handleNotFoundAirport();
     return airport;
   }
 

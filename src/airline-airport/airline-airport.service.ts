@@ -56,7 +56,7 @@ export class AirlineAirportService {
   ): Promise<AirlineEntity> {
     const airline = await this.airlineService.findOne(airlineId);
     for (let index = 0; index < airports.length; index++) {
-      await this.airlineService.findOneBy(airports[index].id);
+      await this.airportService.findOneBy(airports[index].id);
     }
     airline.airports = airports;
     return await this.airlineRepository.save(airline);
@@ -65,9 +65,9 @@ export class AirlineAirportService {
   async deleteAirportFromAirline(airlineId: string, airportId: string) {
     const airline = await this.airlineService.findOne(airlineId);
     await this.airportService.findOneBy(airportId);
-    this.#findAirportFromAirlineId(airportId, airline);
+    await this.#findAirportFromAirlineId(airportId, airline);
     airline.airports = airline.airports.filter((ap) => ap.id !== airportId);
-    this.airlineRepository.save(airline);
+    await this.airlineRepository.save(airline);
   }
 
   async #findAirportFromAirlineId(
