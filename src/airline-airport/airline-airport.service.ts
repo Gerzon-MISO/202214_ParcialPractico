@@ -59,7 +59,8 @@ export class AirlineAirportService {
       await this.airportService.findOneBy(airports[index].id);
     }
     airline.airports = airports;
-    return await this.airlineRepository.save(airline);
+    await this.airlineRepository.save(airline);
+    return await this.airlineService.findOne(airlineId);
   }
 
   async deleteAirportFromAirline(airlineId: string, airportId: string) {
